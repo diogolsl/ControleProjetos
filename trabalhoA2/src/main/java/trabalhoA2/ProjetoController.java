@@ -1,0 +1,51 @@
+package trabalhoA2;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/Projeto")
+public class ProjetoController {
+	
+	@Autowired
+	ProjetoRepository projetoRepository;
+	
+	@GetMapping
+	public List<Projeto> listaProjetos(){
+		return projetoRepository.findAll();
+	}
+	
+	@PostMapping
+	public Projeto salvarProjeto(@RequestBody Projeto projeto) {
+		return projetoRepository.save(projeto);
+	}
+	
+	@DeleteMapping("/{id_projeto}")
+	public void deletarProjeto(@PathVariable Long id_projeto) {
+		projetoRepository.deleteById(id_projeto);
+	}
+	
+	@PutMapping("/{id_projeto}")
+	public Projeto atualizarProjeto(@PathVariable Long id_projeto, @RequestBody Projeto projeto) {
+		Optional<Projeto> oProjeto = projetoRepository.findById(id_projeto);
+		if(oProjeto.isPresent()) {
+			Projeto p = oProjeto.get();
+			p.setNome_projeto(projeto.getNome_projeto());
+			p.setData_inicio(projeto.getData_inicio());
+			p.setResponsavel(projeto.getResponsavel());
+			return projetoRepository.save(p);
+
+		}
+		return null;
+	}
+}
