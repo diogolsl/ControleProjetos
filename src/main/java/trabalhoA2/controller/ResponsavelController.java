@@ -32,14 +32,14 @@ public class ResponsavelController {
 		return responsavelRepository.save(responsavel);
 	}
 	
-	@DeleteMapping("/{id_responsavel}")
-	public void deletarResponsavel(@PathVariable Long id_responsavel) {
-		responsavelRepository.deleteById(id_responsavel);
+	@DeleteMapping("/{idResponsavel}")
+	public void deletarResponsavel(@PathVariable Long idResponsavel) {
+		responsavelRepository.deleteById(idResponsavel);
 	}
 	
-	@PutMapping("/{id_responsavel}")
-	public Responsavel atualizarResponsavel(@PathVariable Long id_responsavel, @RequestBody Responsavel responsavel) {
-		Optional<Responsavel> oResponsavel = responsavelRepository.findById(id_responsavel);
+	@PutMapping("/{idResponsavel}")
+	public Responsavel atualizarResponsavel(@PathVariable Long idResponsavel, @RequestBody Responsavel responsavel) {
+		Optional<Responsavel> oResponsavel = responsavelRepository.findById(idResponsavel);
 		if(oResponsavel.isPresent()) {
 			Responsavel r = oResponsavel.get();
 			r.setNome(responsavel.getNome());

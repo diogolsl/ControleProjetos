@@ -32,18 +32,18 @@ public class TarefaController {
         return tarefaRepository.save(tarefa);
     }
     
-    @DeleteMapping("/{id_tarefa}")
-    public void deletarTarefa(@PathVariable Long id_tarefa) {
-        tarefaRepository.deleteById(id_tarefa);
+    @DeleteMapping("/{idTarefa}")
+    public void deletarTarefa(@PathVariable Long idTarefa) {
+        tarefaRepository.deleteById(idTarefa);
     }
     
-    @PutMapping("/{id_tarefa}")
-    public Tarefa atualizarTarefa(@PathVariable Long id_tarefa, @RequestBody Tarefa tarefa) {
-        Optional<Tarefa> oTarefa = tarefaRepository.findById(id_tarefa);
+    @PutMapping("/{idTarefa}")
+    public Tarefa atualizarTarefa(@PathVariable Long idTarefa, @RequestBody Tarefa tarefa) {
+        Optional<Tarefa> oTarefa = tarefaRepository.findById(idTarefa);
         if(oTarefa.isPresent()) {
             Tarefa t = oTarefa.get();
             t.setDescricao(tarefa.getDescricao());
-            t.setStatus_tarefa(tarefa.getStatus_tarefa());
+            t.setStatusTarefa(tarefa.getStatusTarefa());
             return tarefaRepository.save(t);
         }
         return null;

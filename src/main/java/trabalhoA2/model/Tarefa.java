@@ -12,9 +12,9 @@ public class Tarefa {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_tarefa;
+	private Long idTarefa;
 	private String descricao;
-	private String status_tarefa;
+	private String statusTarefa;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_projeto")
@@ -26,11 +26,11 @@ public class Tarefa {
 	public void setProjeto(Projeto projeto) {
 		this.projeto = projeto;
 	}
-	public Long getId_tarefa() {
-		return id_tarefa;
+	public Long getIdTarefa() {
+		return idTarefa;
 	}
-	public void setId_tarefa(Long id_tarefa) {
-		this.id_tarefa = id_tarefa;
+	public void setIdTarefa(Long idTarefa) {
+		this.idTarefa = idTarefa;
 	}
 	public String getDescricao() {
 		return descricao;
@@ -38,11 +38,11 @@ public class Tarefa {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public String getStatus_tarefa() {
-		return status_tarefa;
+	public String getStatusTarefa() {
+		return statusTarefa;
 	}
-	public void setStatus_tarefa(String status_tarefa) {
-		this.status_tarefa = status_tarefa;
+	public void setStatusTarefa(String statusTarefa) {
+		this.statusTarefa = statusTarefa;
 	}
 	
 }

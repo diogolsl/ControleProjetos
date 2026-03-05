@@ -9,9 +9,10 @@ public class Projeto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_projeto;
-	private String nome_projeto;
-	private Date data_inicio;
+	private Long idProjeto;
+	private String nomeProjeto;
+	private Date dataInicio;
+
 	
 	
 	@ManyToOne
@@ -25,23 +26,23 @@ public class Projeto {
 	public void setResponsavel(Responsavel responsavel) {
 		this.responsavel = responsavel;
 	}
-	public Long getId_projeto() {
-		return id_projeto;
+	public Long getIdProjeto() {
+		return idProjeto;
 	}
-	public void setId_projeto(Long id_projeto) {
-		this.id_projeto = id_projeto;
+	public void setIdProjeto(Long idProjeto) {
+		this.idProjeto = idProjeto;
 	}
-	public String getNome_projeto() {
-		return nome_projeto;
+	public String getNomeProjeto() {
+		return nomeProjeto;
 	}
-	public void setNome_projeto(String nome_projeto) {
-		this.nome_projeto = nome_projeto;
+	public void setNomeProjeto(String nomeProjeto) {
+		this.nomeProjeto = nomeProjeto;
 	}
-	public Date getData_inicio() {
-		return data_inicio;
+	public Date getDataInicio() {
+		return dataInicio;
 	}
-	public void setData_inicio(Date data_inicio) {
-		this.data_inicio = data_inicio;
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
 	}
 	
 	

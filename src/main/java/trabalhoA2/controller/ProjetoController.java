@@ -32,18 +32,18 @@ public class ProjetoController {
 		return projetoRepository.save(projeto);
 	}
 	
-	@DeleteMapping("/{id_projeto}")
-	public void deletarProjeto(@PathVariable Long id_projeto) {
-		projetoRepository.deleteById(id_projeto);
+	@DeleteMapping("/{idProjeto}")
+	public void deletarProjeto(@PathVariable Long idProjeto) {
+		projetoRepository.deleteById(idProjeto);
 	}
 	
-	@PutMapping("/{id_projeto}")
-	public Projeto atualizarProjeto(@PathVariable Long id_projeto, @RequestBody Projeto projeto) {
-		Optional<Projeto> oProjeto = projetoRepository.findById(id_projeto);
+	@PutMapping("/{idProjeto}")
+	public Projeto atualizarProjeto(@PathVariable Long idProjeto, @RequestBody Projeto projeto) {
+		Optional<Projeto> oProjeto = projetoRepository.findById(idProjeto);
 		if(oProjeto.isPresent()) {
 			Projeto p = oProjeto.get();
-			p.setNome_projeto(projeto.getNome_projeto());
-			p.setData_inicio(projeto.getData_inicio());
+			p.setNomeProjeto(projeto.getNomeProjeto());
+			p.setDataInicio(projeto.getDataInicio());
 			p.setResponsavel(projeto.getResponsavel());
 			return projetoRepository.save(p);
 

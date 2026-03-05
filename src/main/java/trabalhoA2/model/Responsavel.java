@@ -10,15 +10,15 @@ public class Responsavel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_responsavel;
+	private Long idResponsavel;
 	private String nome;
 	private String email;
 	
-	public Long getId_responsavel() {
-		return id_responsavel;
+	public Long getIdResponsavel() {
+		return idResponsavel;
 	}
-	public void setId_responsavel(Long id_responsavel) {
-		this.id_responsavel = id_responsavel;
+	public void setIdResponsavel(Long idResponsavel) {
+		this.idResponsavel = idResponsavel;
 	}
 	public String getNome() {
 		return nome;
