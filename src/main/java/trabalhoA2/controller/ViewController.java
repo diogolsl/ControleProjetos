@@ -25,10 +25,10 @@ public class ViewController {
     @Autowired
     private TarefaRepository tarefaRepository;
 
-    @GetMapping
+    @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("projetos", projetoRepository.findAll());
-        model.addAttribute("responsavel", responsavelRepository.findAll());
+        model.addAttribute("responsaveis", responsavelRepository.findAll());
         model.addAttribute("tarefas", tarefaRepository.findAll());
 
         model.addAttribute("novoResponsavel", new Responsavel());
@@ -51,12 +51,26 @@ public class ViewController {
 
     @PostMapping("/salvarProjetoFront")
     public String salvarProjeto(@ModelAttribute Projeto projeto) {
+
+        // utilizando essa estrutura para tentar resolver problema status 500 no swagger
+        Long idDoResponsavel = projeto.getResponsavel().getIdResponsavel();
+        Responsavel responsavelCompleto = responsavelRepository.findById(idDoResponsavel)
+                .orElseThrow(() -> new IllegalArgumentException("Responsável inválido"));
+        projeto.setResponsavel(responsavelCompleto);
+
         projetoRepository.save(projeto);
         return "redirect:/";
     }
 
     @PostMapping("/salvarTarefaFront")
     public String salvarTarefa(@ModelAttribute Tarefa tarefa) {
+
+        // utilizando essa estrutura para tentar resolver problema status 500 no swagger
+        Long idDoProjeto = tarefa.getProjeto().getIdProjeto();
+        Projeto projetoCompleto = projetoRepository.findById(idDoProjeto)
+                .orElseThrow(() -> new IllegalArgumentException("Projeto inválido"));
+        tarefa.setProjeto(projetoCompleto);
+
         tarefaRepository.save(tarefa);
         return "redirect:/";
     }

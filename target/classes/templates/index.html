@@ -29,7 +29,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-header bg-success text-white">2. Projetos</div>
@@ -38,7 +37,7 @@
                         <input type="text" th:field="*{nomeProjeto}" class="form-control mb-2" placeholder="Nome do Projeto" required>
                         <input type="date" th:field="*{dataInicio}" class="form-control mb-2" required>
 
-                        <select th:field="*{responsavel.idresponsavel}" class="form-select mb-2" required>
+                        <select th:field="*{responsavel.idResponsavel}" class="form-select mb-2" required>
                             <option value="" disabled selected>Selecione um Responsável...</option>
                             <option th:each="r : ${responsaveis}" th:value="${r.idResponsavel}" th:text="${r.nome}"></option>
                         </select>

@@ -3,6 +3,7 @@ package trabalhoA2.model;
 import java.util.*;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Projeto {
@@ -11,10 +12,11 @@ public class Projeto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idProjeto;
 	private String nomeProjeto;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dataInicio;
 
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_responsavel")
 	private Responsavel responsavel;
