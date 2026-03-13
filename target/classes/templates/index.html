@@ -22,20 +22,20 @@
                     </form>
                     <hr>
                     <ul class="list-group">
-                            <div th:each="r : ${responsaveis}" class="list-group-item d-flex justify-content-between align-items-center">
+                        <li th:each="r : ${responsaveis}" class="list-group-item d-flex justify-content-between align-items-center">
 
-                                <span th:text="${r.nome} + ' (' + ${r.email} + ')'"></span>
+                            <span th:text="${r.nome} + ' (' + ${r.email} + ')'"></span>
 
-                                <div>
-                                    <a th:href="@{/responsaveis/atualizar/{idResponsavel}(idResponsavel=${r.idResponsavel})}" class="btn btn-warning btn-sm">Editar</a>
-
-                                    <a th:href="@{/responsaveis/excluir/{idResponsavel}(idResponsavel=${r.idResponsavel})}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este responsável?');">Excluir</a>
-                                </div>
+                            <div class="d-flex gap-2">
+                                <a th:href="@{/responsaveis/editar/{idResponsavel}(idResponsavel=${r.idResponsavel})}" class="btn btn-warning btn-sm">Editar</a>
+                                <a th:href="@{/responsaveis/excluir/{idResponsavel}(idResponsavel=${r.idResponsavel})}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este responsável?');">Excluir</a>
                             </div>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
+
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-header bg-success text-white">2. Projetos</div>
@@ -53,15 +53,18 @@
                     </form>
                     <hr>
                     <ul class="list-group">
-                        <div th:each="p : ${projetos}"></div>
-                        <li class="list-group-item" th:each="p : ${projetos}">
-                            <strong th:text="${p.nomeProjeto}"></strong><br>
-                            <small class="text-muted">Resp: <span th:text="${p.responsavel.nome}"></span></small>
+                        <li th:each="p : ${projetos}" class="list-group-item d-flex justify-content-between align-items-center">
+
+                            <div>
+                                <strong th:text="${p.nomeProjeto}"></strong><br>
+                                <small class="text-muted">Resp: <span th:text="${p.responsavel.nome}"></span></small>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <a th:href="@{/projetos/editar/{idProjeto}(idProjeto=${p.idProjeto})}" class="btn btn-warning btn-sm">Editar</a>
+                                <a th:href="@{/projetos/excluir/{idProjeto}(idProjeto=${p.idProjeto})}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este projeto?');">Excluir</a>
+                            </div>
                         </li>
-                        <div>
-                            <a th:href="@{/projetos/editar/{idProjeto}(idProjeto=${p.idProjeto})}" class="btn btn-warning btn-sm">Editar</a>
-                            <a th:href="@{/projetos/excluir/{idProjeto}(idProjeto=${p.idProjeto})}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este projeto?');">Excluir</a>
-                        </div>
                     </ul>
                 </div>
             </div>
@@ -89,18 +92,19 @@
                     </form>
                     <hr>
                     <ul class="list-group">
-                        <div th:each="t : ${tarefas}"></div>
-                        <li class="list-group-item d-flex justify-content-between align-items-start" th:each="t : ${tarefas}">
+                        <li th:each="t : ${tarefas}" class="list-group-item d-flex justify-content-between align-items-center">
+
                             <div>
-                                <strong th:text="${t.descricao}"></strong><br>
+                                <strong th:text="${t.descricao}"></strong>
+                                <span class="badge bg-secondary rounded-pill ms-2" th:text="${t.statusTarefa}"></span><br>
                                 <small class="text-muted">Proj: <span th:text="${t.projeto.nomeProjeto}"></span></small>
                             </div>
-                            <span class="badge bg-secondary rounded-pill" th:text="${t.statusTarefa}"></span>
+
+                            <div class="d-flex gap-2">
+                                <a th:href="@{/tarefas/editar/{idTarefa}(idTarefa=${t.idTarefa})}" class="btn btn-warning btn-sm">Editar</a>
+                                <a th:href="@{/tarefas/excluir/{idTarefa}(idTarefa=${t.idTarefa})}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?');">Excluir</a>
+                            </div>
                         </li>
-                        <div>
-                            <a th:href="@{/tarefas/editar/{idTarefa}(idTarefa=${t.idTarefa})}" class="btn btn-warning btn-sm">Editar</a>
-                            <a th:href="@{/tarefas/excluir/{idTarefa}(idTarefa=${t.idTarefa})}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?');">Excluir</a>
-                        </div>
                     </ul>
                 </div>
             </div>

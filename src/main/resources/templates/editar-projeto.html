@@ -9,7 +9,7 @@
 <div class="container">
   <h2>Editar Projeto</h2>
 
-  <form th:action="@{/projetos/salvar}" th:object="${projeto}" method="post">
+  <form th:action="@{/salvarProjetoFront}" th:object="${projeto}" method="post">
 
     <input type="hidden" th:field="*{idProjeto}">
 

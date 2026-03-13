@@ -27,7 +27,3 @@ CREATE TABLE Tarefa (
 );
 
 
-Select * from projeto;
-Select * from responsavel;
-Select * from tarefa;
-

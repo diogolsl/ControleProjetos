@@ -9,7 +9,7 @@
 <div class="container">
   <h2>Editar Responsável</h2>
 
-  <form th:action="@{/responsaveis/salvar}" th:object="${responsavel}" method="post">
+  <form th:action="@{/salvarResponsavelFront}" th:object="${responsavel}" method="post">
 
     <input type="hidden" th:field="*{idResponsavel}">
 
