@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import trabalhoA2.model.Projeto;
 import trabalhoA2.model.Responsavel;
 import trabalhoA2.model.Tarefa;
@@ -47,14 +48,18 @@ public class ViewController {
 
     // RESPONSAVEIS
     @PostMapping("/salvarResponsavelFront")
-    public String salvarResponsavel(@ModelAttribute Responsavel responsavel) {
+    public String salvarResponsavel(@ModelAttribute Responsavel responsavel, RedirectAttributes redirectAttributes) {
         responsavelRepository.save(responsavel);
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Responsável salvo com sucesso!");
+
         return "redirect:/";
     }
 
     @GetMapping("/responsaveis/excluir/{idResponsavel}")
-    public String deletarResponsavel(@PathVariable Long idResponsavel) {
+    public String deletarResponsavel(@PathVariable Long idResponsavel, RedirectAttributes redirectAttributes) {
         responsavelRepository.deleteById(idResponsavel);
+        redirectAttributes.addFlashAttribute("mensagemExclusao", "Responsável excluído com sucesso!");
+
         return "redirect:/";
     }
 
@@ -68,14 +73,17 @@ public class ViewController {
 
     // PROJETOS
     @PostMapping("/salvarProjetoFront")
-    public String salvarProjeto(@ModelAttribute Projeto projeto) {
+    public String salvarProjeto(@ModelAttribute Projeto projeto, RedirectAttributes redirectAttributes) {
         projetoRepository.save(projeto);
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Projeto salvo com sucesso!");
+
         return "redirect:/";
     }
 
     @GetMapping("/projetos/excluir/{idProjeto}")
-    public String deletarProjeto(@PathVariable Long idProjeto) {
+    public String deletarProjeto(@PathVariable Long idProjeto, RedirectAttributes redirectAttributes) {
         projetoRepository.deleteById(idProjeto);
+        redirectAttributes.addFlashAttribute("mensagemExclusao", "Projeto excluído com sucesso!");
         return "redirect:/";
     }
 
@@ -92,14 +100,18 @@ public class ViewController {
 
     // TAREFAS
     @PostMapping("/salvarTarefaFront")
-    public String salvarTarefa(@ModelAttribute Tarefa tarefa) {
+    public String salvarTarefa(@ModelAttribute Tarefa tarefa, RedirectAttributes redirectAttributes) {
         tarefaRepository.save(tarefa);
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Tarefa salva com sucesso!");
+
         return "redirect:/";
     }
 
     @GetMapping("/tarefas/excluir/{idTarefa}")
-    public String excluirTarefa(@PathVariable Long idTarefa) {
+    public String excluirTarefa(@PathVariable Long idTarefa, RedirectAttributes redirectAttributes) {
         tarefaRepository.deleteById(idTarefa);
+        redirectAttributes.addFlashAttribute("mensagemExclusao", "Tarefa excluída com sucesso!");
+
         return "redirect:/";
     }
 
