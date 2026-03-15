@@ -3,7 +3,12 @@
     color: white;
 }
 
-.bg-card-responsavel:hover{
+.bg-responsavel {
+    background-color: #423861;
+    color: white;
+}
+
+.bg-responsavel:hover {
     background-color: #382e50;
     color: white;
 }
@@ -13,7 +18,12 @@
     color: white;
 }
 
-.bg-card-projeto:hover {
+.bg-projeto {
+    background-color: #8B3A64;
+    color: white;
+}
+
+.bg-projeto:hover {
     background-color: #6c2e4f;
     color: white;
 }
@@ -23,7 +33,12 @@
     color: white;
 }
 
-.bg-card-tarefa:hover {
+.bg-tarefa {
+    background-color: #8B603A;
+    color: white;
+}
+
+.bg-tarefa:hover {
     background-color: #684c2c;
     color: white;
 }

@@ -23,7 +23,7 @@ public class ProjetoController {
 	ProjetoRepository projetoRepository;
 	
 	@GetMapping
-	public List<Projeto> listaProjetos(){
+	public List<Projeto> listaProjetos() {
 		return projetoRepository.findAll();
 	}
 	
