@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Controle de Projetos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body class="bg-light">
 
@@ -23,12 +24,12 @@
     <div class="row">
         <div class="col-md-4">
             <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">1. Responsáveis</div>
+                <div class="card-header bg-card-responsavel">1. Responsáveis</div>
                 <div class="card-body">
                     <form th:action="@{/salvarResponsavelFront}" th:object="${novoResponsavel}" method="post">
                         <input type="text" th:field="*{nome}" class="form-control mb-2" placeholder="Nome" required>
                         <input type="email" th:field="*{email}" class="form-control mb-2" placeholder="Email" required>
-                        <button type="submit" class="btn btn-primary w-100">Adicionar Responsável</button>
+                        <button type="submit" class="btn bg-card-responsavel w-100">Adicionar Responsável</button>
                     </form>
                     <hr>
                     <ul class="list-group">
@@ -48,7 +49,7 @@
 
         <div class="col-md-4">
             <div class="card shadow-sm">
-                <div class="card-header bg-success text-white">2. Projetos</div>
+                <div class="card-header bg-card-projeto">2. Projetos</div>
                 <div class="card-body">
                     <form th:action="@{/salvarProjetoFront}" th:object="${novoProjeto}" method="post">
                         <input type="text" th:field="*{nomeProjeto}" class="form-control mb-2" placeholder="Nome do Projeto" required>
@@ -59,7 +60,7 @@
                             <option th:each="r : ${responsaveis}" th:value="${r.idResponsavel}" th:text="${r.nome}"></option>
                         </select>
 
-                        <button type="submit" class="btn btn-success w-100">Adicionar Projeto</button>
+                        <button type="submit" class="btn bg-card-projeto w-100">Adicionar Projeto</button>
                     </form>
                     <hr>
                     <ul class="list-group">
@@ -82,7 +83,7 @@
 
         <div class="col-md-4">
             <div class="card shadow-sm">
-                <div class="card-header bg-warning text-dark">3. Tarefas</div>
+                <div class="card-header bg-card-tarefa">3. Tarefas</div>
                 <div class="card-body">
                     <form th:action="@{/salvarTarefaFront}" th:object="${novaTarefa}" method="post">
                         <input type="text" th:field="*{descricao}" class="form-control mb-2" placeholder="Descrição da Tarefa" required>
@@ -98,7 +99,7 @@
                             <option th:each="p : ${projetos}" th:value="${p.idProjeto}" th:text="${p.nomeProjeto}"></option>
                         </select>
 
-                        <button type="submit" class="btn btn-warning w-100">Adicionar Tarefa</button>
+                        <button type="submit" class="btn bg-card-tarefa w-100">Adicionar Tarefa</button>
                     </form>
                     <hr>
                     <ul class="list-group">

@@ -7,7 +7,7 @@
 <body class="bg-light p-4">
 
 <div class="container bg-white p-4 rounded shadow-sm" style="max-width: 600px;">
-  <h2 class="mb-4 text-warning">Editar Tarefa</h2>
+  <h2 class="mb-4" style="color:#8B603A">Editar Tarefa</h2>
 
   <form th:action="@{/salvarTarefaFront}" th:object="${tarefa}" method="post">
 
@@ -34,7 +34,7 @@
       </select>
     </div>
 
-    <button type="submit" class="btn btn-warning w-100">Salvar Alterações</button>
+    <button type="submit" class="btn w-100" style="color: white; background-color: #8B603A">Salvar Alterações</button>
     <a th:href="@{/}" class="btn btn-secondary w-100 mt-2">Cancelar e Voltar</a>
   </form>
 </div>

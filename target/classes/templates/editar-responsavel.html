@@ -6,8 +6,8 @@
 </head>
 <body class="p-4">
 
-<div class="container">
-  <h2>Editar Responsável</h2>
+<div class="container bg-white p-4 rounded shadow-sm" style="max-width: 600px;">
+  <h2 class="mb-4" style="color: #423861">Editar Responsável</h2>
 
   <form th:action="@{/salvarResponsavelFront}" th:object="${responsavel}" method="post">
 
@@ -23,8 +23,8 @@
       <input type="email" class="form-control" th:field="*{email}" required>
     </div>
 
-    <button type="submit" class="btn btn-success">Salvar Alterações</button>
-    <a th:href="@{/}" class="btn btn-secondary">Cancelar</a>
+    <button type="submit" class="btn w-100" style="color: white; background-color: #423861">Salvar Alterações</button>
+    <a th:href="@{/}" class="btn btn-secondary w-100 mt-2">Cancelar e Voltar</a>
   </form>
 </div>
 
