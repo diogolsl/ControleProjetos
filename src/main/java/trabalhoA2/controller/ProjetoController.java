@@ -1,18 +1,12 @@
 package trabalhoA2.controller;
 
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import trabalhoA2.dto.ProjetoRequestDTO;
+import trabalhoA2.dto.ProjetoResponseDTO;
 import trabalhoA2.model.Projeto;
-import trabalhoA2.model.Responsavel;
-import trabalhoA2.repository.ProjetoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import trabalhoA2.service.ProjetoService;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,49 +14,52 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/Projeto")
 public class ProjetoController {
-	
-	@Autowired
-	ProjetoRepository projetoRepository;
-	
-	@GetMapping
-	public List<Projeto> listaProjetos() {
-		return projetoRepository.findAll();
+
+	private final ProjetoService projetoService;
+
+	public ProjetoController(ProjetoService projetoService) {
+		this.projetoService = projetoService;
 	}
-	
+
 	@PostMapping
-	public Projeto salvarProjeto(@RequestBody ProjetoRequestDTO dto) {
-		Projeto novoProjeto = new Projeto();
-
-		novoProjeto.setNomeProjeto(dto.nomeProjeto());
-		novoProjeto.setDataInicio(dto.dataInicio());
-
-		Responsavel responsavel = new Responsavel();
-		responsavel.setIdResponsavel(dto.idResponsavel());
-
-		novoProjeto.setResponsavel(responsavel);
-		return projetoRepository.save(novoProjeto);
+	public ResponseEntity<Projeto> salvarProjeto(@Valid @RequestBody ProjetoRequestDTO dto) {
+		Projeto projetoSalvo = projetoService.salvar(dto);
+		return ResponseEntity.ok(projetoSalvo);
 	}
-	
-	@DeleteMapping("/{idProjeto}")
-	public void deletarProjeto(@PathVariable Long idProjeto) {
-		projetoRepository.deleteById(idProjeto);
+
+	@GetMapping
+	public ResponseEntity<List<ProjetoResponseDTO>> listarTodos() {
+		return ResponseEntity.ok(projetoService.listarTodos());
 	}
-	
-	@PutMapping("/{idProjeto}")
-	public Projeto atualizarProjeto(@PathVariable Long idProjeto, @RequestBody ProjetoRequestDTO dto) {
-		Optional<Projeto> oProjeto = projetoRepository.findById(idProjeto);
-		if(oProjeto.isPresent()) {
-			Projeto p = oProjeto.get();
-			p.setNomeProjeto(dto.nomeProjeto());
-			p.setDataInicio(dto.dataInicio());
 
-			Responsavel responsavel = new Responsavel();
-			responsavel.setIdResponsavel(dto.idResponsavel());
-			p.setResponsavel(responsavel);
+	@GetMapping("/{id}")
+	public ResponseEntity<ProjetoResponseDTO> buscarPorId(@PathVariable Long id) {
+		Optional<ProjetoResponseDTO> projeto = projetoService.buscarPorId(id);
 
-			return projetoRepository.save(p);
-
+		if (projeto.isPresent()) {
+			return ResponseEntity.ok(projeto.get());
 		}
-		return null;
+		return ResponseEntity.notFound().build();
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Projeto> atualizarProjeto(@PathVariable Long id, @Valid @RequestBody ProjetoRequestDTO dto) {
+		Projeto projetoAtualizado = projetoService.atualizar(id, dto);
+
+		if (projetoAtualizado != null) {
+			return ResponseEntity.ok(projetoAtualizado);
+		}
+		return ResponseEntity.notFound().build();
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deletarProjeto(@PathVariable Long id) {
+		Optional<ProjetoResponseDTO> projeto = projetoService.buscarPorId(id);
+
+		if (projeto.isPresent()) {
+			projetoService.deletar(id);
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.notFound().build();
 	}
 }

@@ -1,18 +1,12 @@
 package trabalhoA2.controller;
 
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import trabalhoA2.dto.TarefaRequestDTO;
-import trabalhoA2.model.Projeto;
+import trabalhoA2.dto.TarefaResponseDTO;
 import trabalhoA2.model.Tarefa;
-import trabalhoA2.repository.TarefaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import trabalhoA2.service.TarefaService;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,47 +14,52 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/Tarefa")
 public class TarefaController {
-    
-    @Autowired
-    TarefaRepository tarefaRepository;
-    
-    @GetMapping
-    public List<Tarefa> listaTarefas(){
-        return tarefaRepository.findAll();
+
+    private final TarefaService tarefaService;
+
+    public TarefaController(TarefaService tarefaService) {
+        this.tarefaService = tarefaService;
     }
-    
+
     @PostMapping
-    public Tarefa salvarTarefa(@RequestBody TarefaRequestDTO dto) {
-        Tarefa tarefa = new Tarefa();
-        tarefa.setDescricao(dto.descricao());
-        tarefa.setStatusTarefa(dto.statusTarefa());
-
-        Projeto projeto = new Projeto();
-        projeto.setIdProjeto(dto.idProjeto());
-        tarefa.setProjeto(projeto);
-
-        return tarefaRepository.save(tarefa);
+    public ResponseEntity<Tarefa> salvarTarefa(@Valid @RequestBody TarefaRequestDTO dto) {
+        Tarefa tarefa = tarefaService.salvar(dto);
+        return ResponseEntity.ok(tarefa);
     }
-    
-    @DeleteMapping("/{idTarefa}")
-    public void deletarTarefa(@PathVariable Long idTarefa) {
-        tarefaRepository.deleteById(idTarefa);
+
+    @GetMapping
+    public ResponseEntity<List<TarefaResponseDTO>> listarTodos() {
+        return ResponseEntity.ok(tarefaService.listarTodos());
     }
-    
-    @PutMapping("/{idTarefa}")
-    public Tarefa atualizarTarefa(@PathVariable Long idTarefa, @RequestBody TarefaRequestDTO dto) {
-        Optional<Tarefa> oTarefa = tarefaRepository.findById(idTarefa);
-        if(oTarefa.isPresent()) {
-            Tarefa t = oTarefa.get();
-            t.setDescricao(dto.descricao());
-            t.setStatusTarefa(dto.statusTarefa());
 
-            Projeto projeto = new Projeto();
-            projeto.setIdProjeto(dto.idProjeto());
-            t.setProjeto(projeto);
+    @GetMapping("/{id}")
+    public ResponseEntity<TarefaResponseDTO> buscarPorId(@PathVariable Long id) {
+        Optional<TarefaResponseDTO> tarefa = tarefaService.buscarPorId(id);
 
-            return tarefaRepository.save(t);
+        if (tarefa.isPresent()) {
+            return ResponseEntity.ok(tarefa.get());
         }
-        return null;
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @Valid @RequestBody TarefaRequestDTO dto) {
+        Tarefa atualizada = tarefaService.atualizar(id, dto);
+
+        if (atualizada != null) {
+            return ResponseEntity.ok(atualizada);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarTarefa(@PathVariable Long id) {
+        Optional<TarefaResponseDTO> tarefa = tarefaService.buscarPorId(id);
+
+        if (tarefa.isPresent()) {
+            tarefaService.deletar(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

@@ -1,58 +1,65 @@
 package trabalhoA2.controller;
 
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import trabalhoA2.dto.ResponsavelRequestDTO;
+import trabalhoA2.dto.ResponsavelResponseDTO;
 import trabalhoA2.model.Responsavel;
-import trabalhoA2.repository.ResponsavelRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import trabalhoA2.service.ResponsavelService;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/Responsavel")
+@RequestMapping("/api/responsaveis")
 public class ResponsavelController {
-	
-	@Autowired
-	ResponsavelRepository responsavelRepository;
-	
-	@GetMapping
-	public List<Responsavel> listaResponsaveis(){
-		return responsavelRepository.findAll();
+
+	private final ResponsavelService responsavelService;
+
+	public ResponsavelController(ResponsavelService responsavelService) {
+		this.responsavelService = responsavelService;
 	}
-	
+
 	@PostMapping
-	public Responsavel salvarResponsavel(@RequestBody ResponsavelRequestDTO dto) {
-		Responsavel responsavel = new Responsavel();
-
-		responsavel.setNome(dto.nome());
-		responsavel.setEmail(dto.email());
-
-		return responsavelRepository.save(responsavel);
+	public ResponseEntity<Responsavel> salvarResponsavel(@Valid @RequestBody ResponsavelRequestDTO dto) {
+		Responsavel responsavel = responsavelService.salvar(dto);
+		return ResponseEntity.ok(responsavel);
 	}
-	
-	@DeleteMapping("/{idResponsavel}")
-	public void deletarResponsavel(@PathVariable Long idResponsavel) {
-		responsavelRepository.deleteById(idResponsavel);
-	}
-	
-	@PutMapping("/{idResponsavel}")
-	public Responsavel atualizarResponsavel(@PathVariable Long idResponsavel, @RequestBody ResponsavelRequestDTO dto) {
-		Optional<Responsavel> oResponsavel = responsavelRepository.findById(idResponsavel);
-		if(oResponsavel.isPresent()) {
-			Responsavel r = oResponsavel.get();
-			r.setNome(dto.nome());
-			r.setEmail(dto.email());
-			return responsavelRepository.save(r);
 
+	@GetMapping
+	public ResponseEntity<List<ResponsavelResponseDTO>> listarTodos() {
+		return ResponseEntity.ok(responsavelService.listarTodos());
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<ResponsavelResponseDTO> buscarPorId(@PathVariable Long id) {
+		Optional<ResponsavelResponseDTO> responsavel = responsavelService.buscarPorId(id);
+
+		if (responsavel.isPresent()) {
+			return ResponseEntity.ok(responsavel.get());
 		}
-		return null;
+		return ResponseEntity.notFound().build();
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Responsavel> atualizarResponsavel(@PathVariable Long id, @Valid @RequestBody ResponsavelRequestDTO dto) {
+		Responsavel atualizado = responsavelService.atualizar(id, dto);
+
+		if (atualizado != null) {
+			return ResponseEntity.ok(atualizado);
+		}
+		return ResponseEntity.notFound().build();
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deletarResponsavel(@PathVariable Long id) {
+		Optional<ResponsavelResponseDTO> responsavel = responsavelService.buscarPorId(id);
+
+		if (responsavel.isPresent()) {
+			responsavelService.deletar(id);
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.notFound().build();
 	}
 }
