@@ -1,6 +1,8 @@
 package trabalhoA2.controller;
 
+import trabalhoA2.dto.ProjetoRequestDTO;
 import trabalhoA2.model.Projeto;
+import trabalhoA2.model.Responsavel;
 import trabalhoA2.repository.ProjetoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,8 +30,17 @@ public class ProjetoController {
 	}
 	
 	@PostMapping
-	public Projeto salvarProjeto(@RequestBody Projeto projeto) {
-		return projetoRepository.save(projeto);
+	public Projeto salvarProjeto(@RequestBody ProjetoRequestDTO dto) {
+		Projeto novoProjeto = new Projeto();
+
+		novoProjeto.setNomeProjeto(dto.nomeProjeto());
+		novoProjeto.setDataInicio(dto.dataInicio());
+
+		Responsavel responsavel = new Responsavel();
+		responsavel.setIdResponsavel(dto.idResponsavel());
+
+		novoProjeto.setResponsavel(responsavel);
+		return projetoRepository.save(novoProjeto);
 	}
 	
 	@DeleteMapping("/{idProjeto}")
@@ -38,13 +49,17 @@ public class ProjetoController {
 	}
 	
 	@PutMapping("/{idProjeto}")
-	public Projeto atualizarProjeto(@PathVariable Long idProjeto, @RequestBody Projeto projeto) {
+	public Projeto atualizarProjeto(@PathVariable Long idProjeto, @RequestBody ProjetoRequestDTO dto) {
 		Optional<Projeto> oProjeto = projetoRepository.findById(idProjeto);
 		if(oProjeto.isPresent()) {
 			Projeto p = oProjeto.get();
-			p.setNomeProjeto(projeto.getNomeProjeto());
-			p.setDataInicio(projeto.getDataInicio());
-			p.setResponsavel(projeto.getResponsavel());
+			p.setNomeProjeto(dto.nomeProjeto());
+			p.setDataInicio(dto.dataInicio());
+
+			Responsavel responsavel = new Responsavel();
+			responsavel.setIdResponsavel(dto.idResponsavel());
+			p.setResponsavel(responsavel);
+
 			return projetoRepository.save(p);
 
 		}

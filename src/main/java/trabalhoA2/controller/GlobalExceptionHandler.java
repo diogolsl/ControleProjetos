@@ -1,33 +1,27 @@
 package trabalhoA2.controller;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-@ExceptionHandler(DataIntegrityViolationException.class)
-    public String lidarComErroDeIntegridade(DataIntegrityViolationException ex, HttpServletRequest request, Model model) throws Exception {
-        String mensagem = "Não foi possível excluir o registro porque ele está sendo usado em outro lugar do sistema";
-        String detalhes = ex.getMessage().toLowerCase();
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public Object lidarComErroDeIntegridade(DataIntegrityViolationException ex, HttpServletRequest request, Model model) {
         String url = request.getRequestURI();
+        String mensagemAmigavel = "Ação bloqueada: Não é possível excluir este registro porque ele já está vinculado a outro item no sistema.";
 
         if (url.startsWith("/api") || url.startsWith("/v3/api-docs") || url.startsWith("/swagger-ui/")) {
-            throw ex;
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("erro", mensagemAmigavel));
         }
 
-        if (detalhes.contains("tarefa")) {
-        mensagem = "Ação bloqueada! Antes de apagar este Projeto, certifique-se de excluir as TAREFAS vinculadas a ele.";
-        }
-        else if (detalhes.contains("projeto")) {
-        mensagem = "Ação bloqueada! Antes de apagar um Responsável, certifique-se de excluir ou alterar os PROJETOS vinculados a ele.";
-        }
-
-        model.addAttribute("mensagemErro", mensagem);
-
+        model.addAttribute("erro", mensagemAmigavel);
         return "erro";
     }
 

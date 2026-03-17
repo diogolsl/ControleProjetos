@@ -1,5 +1,6 @@
 package trabalhoA2.controller;
 
+import trabalhoA2.dto.ResponsavelRequestDTO;
 import trabalhoA2.model.Responsavel;
 import trabalhoA2.repository.ResponsavelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,12 @@ public class ResponsavelController {
 	}
 	
 	@PostMapping
-	public Responsavel salvarResponsavel(@RequestBody Responsavel responsavel) {
+	public Responsavel salvarResponsavel(@RequestBody ResponsavelRequestDTO dto) {
+		Responsavel responsavel = new Responsavel();
+
+		responsavel.setNome(dto.nome());
+		responsavel.setEmail(dto.email());
+
 		return responsavelRepository.save(responsavel);
 	}
 	
@@ -38,12 +44,12 @@ public class ResponsavelController {
 	}
 	
 	@PutMapping("/{idResponsavel}")
-	public Responsavel atualizarResponsavel(@PathVariable Long idResponsavel, @RequestBody Responsavel responsavel) {
+	public Responsavel atualizarResponsavel(@PathVariable Long idResponsavel, @RequestBody ResponsavelRequestDTO dto) {
 		Optional<Responsavel> oResponsavel = responsavelRepository.findById(idResponsavel);
 		if(oResponsavel.isPresent()) {
 			Responsavel r = oResponsavel.get();
-			r.setNome(responsavel.getNome());
-			r.setEmail(responsavel.getEmail());
+			r.setNome(dto.nome());
+			r.setEmail(dto.email());
 			return responsavelRepository.save(r);
 
 		}

@@ -1,5 +1,7 @@
 package trabalhoA2.controller;
 
+import trabalhoA2.dto.TarefaRequestDTO;
+import trabalhoA2.model.Projeto;
 import trabalhoA2.model.Tarefa;
 import trabalhoA2.repository.TarefaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,15 @@ public class TarefaController {
     }
     
     @PostMapping
-    public Tarefa salvarTarefa(@RequestBody Tarefa tarefa) {
+    public Tarefa salvarTarefa(@RequestBody TarefaRequestDTO dto) {
+        Tarefa tarefa = new Tarefa();
+        tarefa.setDescricao(dto.descricao());
+        tarefa.setStatusTarefa(dto.statusTarefa());
+
+        Projeto projeto = new Projeto();
+        projeto.setIdProjeto(dto.idProjeto());
+        tarefa.setProjeto(projeto);
+
         return tarefaRepository.save(tarefa);
     }
     
@@ -38,12 +48,17 @@ public class TarefaController {
     }
     
     @PutMapping("/{idTarefa}")
-    public Tarefa atualizarTarefa(@PathVariable Long idTarefa, @RequestBody Tarefa tarefa) {
+    public Tarefa atualizarTarefa(@PathVariable Long idTarefa, @RequestBody TarefaRequestDTO dto) {
         Optional<Tarefa> oTarefa = tarefaRepository.findById(idTarefa);
         if(oTarefa.isPresent()) {
             Tarefa t = oTarefa.get();
-            t.setDescricao(tarefa.getDescricao());
-            t.setStatusTarefa(tarefa.getStatusTarefa());
+            t.setDescricao(dto.descricao());
+            t.setStatusTarefa(dto.statusTarefa());
+
+            Projeto projeto = new Projeto();
+            projeto.setIdProjeto(dto.idProjeto());
+            t.setProjeto(projeto);
+
             return tarefaRepository.save(t);
         }
         return null;
