@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   mysql-db:
     image: mysql:8.0
-    container_name: mysql-trabalho-a2
+    container_name: mysql-controle-projetos
     restart: always
     env_file:
       - .env
@@ -13,7 +11,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 
