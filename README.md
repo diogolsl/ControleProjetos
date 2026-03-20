@@ -1,8 +1,6 @@
 # Controle de Projetos API
 
----
-
-Aplicação full-stack desenolvida com **Spring Boot, Bootstrap, MySQL e Docker**.
+Aplicação full-stack desenvolvida com **Spring Boot, Bootstrap, MySQL e Docker**.
 
 ## Objetivo do Trabalho
 O desenvolvimento desta API visa demonstrar na prática os conceitos de:
@@ -12,8 +10,6 @@ O desenvolvimento desta API visa demonstrar na prática os conceitos de:
 * Integração Backend e Frontend.
 
 ## Tecnologias Utilizadas (Stack)
-
----
 
 ### Backend
 
@@ -33,7 +29,6 @@ O desenvolvimento desta API visa demonstrar na prática os conceitos de:
 * Docker & Docker Compose
 * Maven
 
----
 
 ## Como rodar o projeto na sua máquina
 
@@ -41,6 +36,7 @@ O desenvolvimento desta API visa demonstrar na prática os conceitos de:
 Certifique-se de ter instalado em sua máquina: 
 
 * [Java 17+](https://www.oracle.com/java/technologies/downloads/#jdk26-linux)
+* [Maven](https://maven.apache.org/download.cgi)
 * [Docker e Docker Compose](https://www.docker.com/products/docker-desktop)
 * [Git](https://git-scm.com/)
 
@@ -49,9 +45,10 @@ Certifique-se de ter instalado em sua máquina:
 git clone https://github.com/diogolsl/ControleProjetos.git
 cd ControleProjetos
 ```
-### 3. Criar ambiente
 
-```env 
+### 3. Criar ambiente 
+
+```bash 
 cp .env.example .env 
 ```
 Edite o `.env` com seus valores.
@@ -60,7 +57,8 @@ Edite o `.env` com seus valores.
 ```bash 
 docker-compose up -d
 ```
-Com o Docker aberto, execute o comando abaixo na raiz do projeto para criar e iniciar o contêiner do MySQL (configurado para rodar na porta 3307 e evitar conflitos locais):
+
+Aguarde alguns segundos para o MySQL inicializar
 
 ### 5. Iniciar aplicação Spring Boot
 ```bash 
@@ -68,5 +66,10 @@ mvn spring-boot:run
 ```
 
 ### 6. Acessar API
-* Acesso ao swagger: http://localhost:8080/swagger-ui/index.html
+* Acesso ao swagger (testar endpoints) : http://localhost:8080/swagger-ui/index.html
 * Acesso a interface: http://localhost:8080
+
+### 7. Como encerrar a aplicação 
+* Para parar a API: Pressione Ctrl + C no terminal onde o Spring Boot está rodando.
+* Para parar o Banco de Dados: Execute `docker-compose down` no terminal.
+
