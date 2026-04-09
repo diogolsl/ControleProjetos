@@ -23,6 +23,6 @@ jobs:
 
       - name: Executar Linting (Checkstyle)
         run: mvn checkstyle:check
-      
+
       - name: Executar Testes Automatizados
         run: mvn test

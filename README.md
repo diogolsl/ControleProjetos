@@ -8,6 +8,8 @@ O desenvolvimento desta API visa demonstrar na prática os conceitos de:
 * Criação de endpoints REST.
 * Configuração de infraestrutura local utilizando Docker.
 * Integração Backend e Frontend.
+* Garantia de qualidade com testes automatizados e análise estática de código.
+* Integração Contínua (CI) com pipelines automatizados.
 
 ## Tecnologias Utilizadas (Stack)
 
@@ -17,6 +19,12 @@ O desenvolvimento desta API visa demonstrar na prática os conceitos de:
 * Spring Boot 
 * Spring Data JPA / Hibernate
 * MySQL 
+
+### Qualidade de Software e CI
+
+* JUnit 5 e Mockito
+* Checkstyle
+* GitHub Actions 
 
 ### Frontend
 
@@ -28,7 +36,6 @@ O desenvolvimento desta API visa demonstrar na prática os conceitos de:
 
 * Docker & Docker Compose
 * Maven
-
 
 ## Como rodar o projeto na sua máquina
 
@@ -72,4 +79,19 @@ mvn spring-boot:run
 ### 7. Como encerrar a aplicação 
 * Para parar a API: Pressione Ctrl + C no terminal onde o Spring Boot está rodando.
 * Para parar o Banco de Dados: Execute `docker-compose down` no terminal.
+
+
+### 8. Qualidade e Testes Automatizados
+Executar análise estática (Linting)
+```bash
+mvn checkstyle:check
+```
+
+Executar testes automatizados
+* Teste tem foco na camada de negócio ProjetoService
+```bash
+mvn test 
+```
+
+
 
