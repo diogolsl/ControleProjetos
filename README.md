@@ -1,6 +1,16 @@
-# Controle de Projetos API
+# Controle de Projetos 
 
 Aplicação full-stack desenvolvida com **Spring Boot, Bootstrap, MySQL e Docker**.
+
+## Sobre
+* Esse projeto visa resolver uma dor real, organizar projetos de maneira intuitiva, organizada e amigável.
+* O objetivo principal é auxiliar gestores e líderes de equipes que precisam organizar rotinas sem precisar lidar com sistemas complexos.
+* Criador: Diogo Lucas
+* Versão: 1.0.1
+* Funcionalidades Principais:
+    * Gestão Completa: Cadastro, edição, exclusão e listagem de todos os projetos em uma interface.
+    * Atribuição de Donos: Definição de um responsável para cada demanda.
+    * Controle de Tempo: Registro da data de início para acompanhamento real dos prazos.
 
 ## Objetivo do Trabalho
 O desenvolvimento desta API visa demonstrar na prática os conceitos de:
@@ -81,7 +91,7 @@ mvn spring-boot:run
 * Para parar o Banco de Dados: Execute `docker-compose down` no terminal.
 
 
-### 8. Qualidade e Testes Automatizados
+## Qualidade e Testes Automatizados
 Executar análise estática (Linting)
 ```bash
 mvn checkstyle:check
@@ -92,6 +102,9 @@ Executar testes automatizados
 ```bash
 mvn test 
 ```
+
+## Link de Acesso ao projeto 
+* [Repositório](https://github.com/diogolsl/ControleProjetos)
 
 
 
