@@ -53,7 +53,7 @@
                 <div class="card-body">
                     <form th:action="@{/salvarProjetoFront}" th:object="${novoProjeto}" method="post">
                         <input type="text" th:field="*{nomeProjeto}" class="form-control mb-2" placeholder="Nome do Projeto" required>
-                        <input type="date" th:field="*{dataInicio}" class="form-control mb-2" required>
+                        <input type="text" th:field="*{dataInicio}" id="dataInicio" class="form-control mb-2" placeholder="Selecione a data..." required>
 
                         <select th:field="*{responsavel.idResponsavel}" class="form-select mb-2" required>
                             <option value="" disabled selected>Selecione um Responsável...</option>
@@ -123,23 +123,47 @@
     </div>
 </div>
 <div>
-<script>
-    setTimeout(function() {
-        var alertaVerde = document.getElementById('alertaSucesso');
-        var alertaVermelho = document.getElementById('alertaExclusao');
-
-        if (alertaVerde) {
-            var bsAlertVerde = new bootstrap.Alert(alertaVerde);
-            bsAlertVerde.close();
-        }
-
-        if (alertaVermelho) {
-            var bsAlertVermelho = new bootstrap.Alert(alertaVermelho);
-            bsAlertVermelho.close();
-        }
-    }, 3000);
-</script>
 </div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
+
+<script>
+    setTimeout(() => {
+        const alertaVerde = document.getElementById('alertaSucesso');
+        const alertaVermelho = document.getElementById('alertaExclusao');
+
+        if (alertaVerde) new bootstrap.Alert(alertaVerde).close();
+        if (alertaVermelho) new bootstrap.Alert(alertaVermelho).close();
+    }, 3000);
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        const anoAtual = new Date().getFullYear();
+        let datasDesabilitadas = [];
+
+        try {
+            const response = await fetch(`/api/feriados/${anoAtual}`);
+
+            if (response.ok) {
+                const feriados = await response.json();
+                datasDesabilitadas = feriados.map(feriado => feriado.data);
+                console.log("Feriados carregados com sucesso:", datasDesabilitadas);
+            }
+        } catch (error) {
+            console.error("Erro ao buscar feriados da API:", error);
+        }
+
+        flatpickr("#dataInicio", {
+            locale: "pt",
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d/m/Y",
+            disable: datasDesabilitadas
+        });
+    });
+</script>
 </body>
 </html>
