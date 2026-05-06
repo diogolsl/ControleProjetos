@@ -2,6 +2,7 @@
 
 Aplicação full-stack desenvolvida com **Spring Boot, Bootstrap, MySQL e Docker**.
 * [Controle de Projetos em produção](https://controleprojetos-production.up.railway.app)
+###### Obs: O deploy foi feito por razões acadêmicas e por isso não será mantido no ar. Caso queira ver a aplicação rodando, siga o passo a passo documentado a seguir.
 
 ## Sobre
 * Esse projeto visa resolver uma dor real, organizar projetos de maneira intuitiva, organizada e amigável.
