@@ -45,7 +45,7 @@ O desenvolvimento desta API visa demonstrar na prática os conceitos de:
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 
-### Infraestrutura 
+### Infraestrutura
 
 ![Docker](https://img.shields.io/badge/docker-%232496ED.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Docker Compose](https://img.shields.io/badge/docker_compose-%232496ED.svg?style=for-the-badge&logo=docker&logoColor=white)
