@@ -21,6 +21,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
+    <div th:if="${mensagemErro}" class="alert alert-warning alert-dismissible fade show text-center mx-auto mb-4" role="alert" style="max-width: 600px;" id="alertaErro">
+        <strong>Atenção!</strong> <span th:text="${mensagemErro}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <div class="row">
         <div class="col-md-4">
             <div class="card shadow-sm">
@@ -135,9 +140,11 @@
     setTimeout(() => {
         const alertaVerde = document.getElementById('alertaSucesso');
         const alertaVermelho = document.getElementById('alertaExclusao');
+        const alertaAmarelo = document.getElementById('alertaErro');
 
         if (alertaVerde) new bootstrap.Alert(alertaVerde).close();
         if (alertaVermelho) new bootstrap.Alert(alertaVermelho).close();
+        if (alertaAmarelo) new bootstrap.Alert(alertaAmarelo).close();
     }, 3000);
 
     document.addEventListener('DOMContentLoaded', async function() {

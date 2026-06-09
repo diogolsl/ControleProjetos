@@ -1,6 +1,7 @@
 package trabalhoA2.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,11 @@ public class ViewController {
 
     @GetMapping("/")
     public String index(Model model) {
+        carregarDadosIndex(model);
+        return "index";
+    }
+
+    private void carregarDadosIndex(Model model) {
         model.addAttribute("projetos", projetoRepository.findAll());
         model.addAttribute("responsaveis", responsavelRepository.findAll());
         model.addAttribute("tarefas", tarefaRepository.findAll());
@@ -37,20 +43,22 @@ public class ViewController {
 
         Projeto projeto = new Projeto();
         projeto.setResponsavel(new Responsavel());
-        model.addAttribute("novoProjeto", new Projeto());
+        model.addAttribute("novoProjeto", projeto);
 
         Tarefa tarefa = new Tarefa();
         tarefa.setProjeto(new Projeto());
-        model.addAttribute("novaTarefa", new Tarefa());
-
-        return "index";
+        model.addAttribute("novaTarefa", tarefa);
     }
 
     // RESPONSAVEIS
     @PostMapping("/salvarResponsavelFront")
     public String salvarResponsavel(@ModelAttribute Responsavel responsavel, RedirectAttributes redirectAttributes) {
-        responsavelRepository.save(responsavel);
-        redirectAttributes.addFlashAttribute("mensagemSucesso", "Responsável salvo com sucesso!");
+        try {
+            responsavelRepository.save(responsavel);
+            redirectAttributes.addFlashAttribute("mensagemSucesso", "Responsável salvo com sucesso!");
+        } catch (DataIntegrityViolationException ex) {
+            redirectAttributes.addFlashAttribute("mensagemErro", "Já existe um responsável com esse email.");
+        }
 
         return "redirect:/";
     }
@@ -74,8 +82,12 @@ public class ViewController {
     // PROJETOS
     @PostMapping("/salvarProjetoFront")
     public String salvarProjeto(@ModelAttribute Projeto projeto, RedirectAttributes redirectAttributes) {
-        projetoRepository.save(projeto);
-        redirectAttributes.addFlashAttribute("mensagemSucesso", "Projeto salvo com sucesso!");
+        try {
+            projetoRepository.save(projeto);
+            redirectAttributes.addFlashAttribute("mensagemSucesso", "Projeto salvo com sucesso!");
+        } catch (DataIntegrityViolationException ex) {
+            redirectAttributes.addFlashAttribute("mensagemErro", "Não foi possível salvar o projeto. Confira o responsável selecionado.");
+        }
 
         return "redirect:/";
     }
@@ -101,8 +113,12 @@ public class ViewController {
     // TAREFAS
     @PostMapping("/salvarTarefaFront")
     public String salvarTarefa(@ModelAttribute Tarefa tarefa, RedirectAttributes redirectAttributes) {
-        tarefaRepository.save(tarefa);
-        redirectAttributes.addFlashAttribute("mensagemSucesso", "Tarefa salva com sucesso!");
+        try {
+            tarefaRepository.save(tarefa);
+            redirectAttributes.addFlashAttribute("mensagemSucesso", "Tarefa salva com sucesso!");
+        } catch (DataIntegrityViolationException ex) {
+            redirectAttributes.addFlashAttribute("mensagemErro", "Não foi possível salvar a tarefa. Confira o projeto selecionado.");
+        }
 
         return "redirect:/";
     }
