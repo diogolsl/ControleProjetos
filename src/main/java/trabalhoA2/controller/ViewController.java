@@ -65,8 +65,12 @@ public class ViewController {
 
     @GetMapping("/responsaveis/excluir/{idResponsavel}")
     public String deletarResponsavel(@PathVariable Long idResponsavel, RedirectAttributes redirectAttributes) {
-        responsavelRepository.deleteById(idResponsavel);
-        redirectAttributes.addFlashAttribute("mensagemExclusao", "Responsável excluído com sucesso!");
+        try {
+            responsavelRepository.deleteById(idResponsavel);
+            redirectAttributes.addFlashAttribute("mensagemExclusao", "Responsável excluído com sucesso!");
+        } catch (DataIntegrityViolationException ex) {
+            redirectAttributes.addFlashAttribute("mensagemErro", "Não é possível excluir este responsável pois ele já está atrelado a um ou mais projetos.");
+        }
 
         return "redirect:/";
     }
@@ -94,8 +98,12 @@ public class ViewController {
 
     @GetMapping("/projetos/excluir/{idProjeto}")
     public String deletarProjeto(@PathVariable Long idProjeto, RedirectAttributes redirectAttributes) {
-        projetoRepository.deleteById(idProjeto);
-        redirectAttributes.addFlashAttribute("mensagemExclusao", "Projeto excluído com sucesso!");
+        try {
+            projetoRepository.deleteById(idProjeto);
+            redirectAttributes.addFlashAttribute("mensagemExclusao", "Projeto excluído com sucesso!");
+        } catch (DataIntegrityViolationException ex) {
+            redirectAttributes.addFlashAttribute("mensagemErro", "Não é possível excluir este projeto pois ele já possui tarefas cadastradas.");
+        }
         return "redirect:/";
     }
 
@@ -125,8 +133,12 @@ public class ViewController {
 
     @GetMapping("/tarefas/excluir/{idTarefa}")
     public String excluirTarefa(@PathVariable Long idTarefa, RedirectAttributes redirectAttributes) {
-        tarefaRepository.deleteById(idTarefa);
-        redirectAttributes.addFlashAttribute("mensagemExclusao", "Tarefa excluída com sucesso!");
+        try {
+            tarefaRepository.deleteById(idTarefa);
+            redirectAttributes.addFlashAttribute("mensagemExclusao", "Tarefa excluída com sucesso!");
+        } catch (DataIntegrityViolationException ex) {
+            redirectAttributes.addFlashAttribute("mensagemErro", "Não foi possível excluir esta tarefa.");
+        }
 
         return "redirect:/";
     }
