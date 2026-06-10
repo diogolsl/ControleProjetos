@@ -3,7 +3,7 @@ package trabalhoA2.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ public class ProjetoServiceTest {
     public void deveSalvarProjetoComSucesso() {
         ProjetoRequestDTO dtoMock = mock(ProjetoRequestDTO.class);
         when(dtoMock.nomeProjeto()).thenReturn("Ação Social Comunitária");
-        when(dtoMock.dataInicio()).thenReturn(new Date());
+        when(dtoMock.dataInicio()).thenReturn(LocalDate.now());
         when(dtoMock.idResponsavel()).thenReturn(1L);
 
         Projeto projetoSalvo = new Projeto();

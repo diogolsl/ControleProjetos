@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("erro", mensagemAmigavel));
         }
 
-        model.addAttribute("erro", mensagemAmigavel);
+        model.addAttribute("mensagemErro", mensagemAmigavel);
         return "erro";
     }
 

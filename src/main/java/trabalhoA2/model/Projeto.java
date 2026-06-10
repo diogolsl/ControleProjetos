@@ -1,6 +1,6 @@
 package trabalhoA2.model;
 
-import java.util.*;
+import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,7 +14,7 @@ public class Projeto {
 	private String nomeProjeto;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date dataInicio;
+	private LocalDate dataInicio;
 
 
 	@ManyToOne
@@ -40,10 +40,10 @@ public class Projeto {
 	public void setNomeProjeto(String nomeProjeto) {
 		this.nomeProjeto = nomeProjeto;
 	}
-	public Date getDataInicio() {
+	public LocalDate getDataInicio() {
 		return dataInicio;
 	}
-	public void setDataInicio(Date dataInicio) {
+	public void setDataInicio(LocalDate dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 	

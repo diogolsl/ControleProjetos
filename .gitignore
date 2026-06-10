@@ -4,6 +4,7 @@
 .env
 *.env
 .env.*
+!.env.example
 
 # ==========================================
 # MAVEN E COMPILAÇÃO
@@ -66,3 +67,9 @@ bin/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# ==========================================
+# BANCO DE DADOS E BACKUPS
+# ==========================================
+*.sql
+!ControleProjeto.sql
