@@ -30,8 +30,7 @@ O desenvolvimento desta API visa demonstrar na prática os conceitos de:
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/postgresql-4169e1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
 ### Qualidade de Software e CI
 
@@ -107,5 +106,9 @@ mvn test
 ## Link de Acesso ao projeto 
 * [Repositório](https://github.com/diogolsl/ControleProjetos)
 
-
+## Integrantes 
+* Diogo Lucas 
+* Ian Felipe
+* Davi Carneiro
+* Vinicius Carvalho
 
